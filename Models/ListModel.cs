@@ -18,6 +18,7 @@ namespace musicList2.Models {
 
     public class ListEntryPostModel
     {
+        [Required]
         public string Content { get; set; }
     }
 }

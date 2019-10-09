@@ -11,8 +11,6 @@ namespace musicList2
 {
     public class Startup
     {
-        public static readonly string SQLiteConnection = "Data Source=:memory:";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -56,6 +54,12 @@ namespace musicList2
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            app.Use(async (ctx, next) =>
+            {
+                ctx.Response.Headers.Add("Server", "Music List");
+                await next();
+            });
 
             app.UseMvc(routes =>
             {
