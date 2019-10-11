@@ -29,14 +29,39 @@ namespace musicList2.Controllers
                 return BadRequest();
 
             if (entry.Content == null || entry.Content == "")
-                return BadRequest(new { error = "'content' must be present" });
+                return BadRequest(ErrorModel.BadRequest());
 
             var listEntry = new ListEntry<string>(entry.Content);
 
-            db.Add(listEntry);
+            db.Entries.Add(listEntry);
             await db.SaveChangesAsync();
 
             return CreatedAtAction("entry created", listEntry);
+        }
+
+        [HttpDelete("entries/{id}")]
+        public async Task<IActionResult> DeleteEntry(Guid id)
+        {
+            if (id == null)
+                return BadRequest(ErrorModel.BadRequest());
+
+            var entry = db.Entries.Find(id);
+            if (entry == null)
+                return NotFound(ErrorModel.NotFound());
+
+            db.Entries.Remove(entry);
+            await db.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPost("entries/flush")]
+        public async Task<IActionResult> Flush()
+        {
+            db.Entries.RemoveRange(db.Entries.ToArray());
+            await db.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }
