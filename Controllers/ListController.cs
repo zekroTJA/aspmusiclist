@@ -25,8 +25,8 @@ namespace musicList2.Controllers
         [HttpPost("entries")]
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> CreateEntry([Bind("Content"), FromBody] ListEntryPostModel entry) {
-            if (ModelState.IsValid)
-                return BadRequest();
+            if (!ModelState.IsValid)
+                return BadRequest(ErrorModel.BadRequest());
 
             if (entry.Content == null || entry.Content == "")
                 return BadRequest(ErrorModel.BadRequest());
