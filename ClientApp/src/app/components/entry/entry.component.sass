@@ -1,0 +1,45 @@
+
+$c-bg: #26323800
+$c-bg-first: #0D47A100
+
+
+*
+  transition: all .25s ease-in-out
+
+
+.entry-wrapper
+  display: flex
+  background-color: opacify($c-bg, .7)
+  border-radius: 5px
+  padding: 5px 10px
+  margin-bottom: 5px
+
+  &:hover
+    background-color: opacify($c-bg, 1)
+
+    .del-btn
+      opacity: 1
+
+
+.del-btn
+  opacity: 0
+  margin: auto 0px auto auto
+  cursor: pointer
+  border-radius: 3px
+
+  img
+    width: 1em
+    height: 1em
+    padding: 0px 3px
+    transform: translateY(2px)
+
+  &:hover
+    background-color: #ffffff32
+
+
+.first
+  background-color: opacify($c-bg-first, .7)
+
+  &:hover
+    background-color: opacify($c-bg-first, 1)
+

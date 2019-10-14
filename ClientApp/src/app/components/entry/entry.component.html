@@ -1,0 +1,6 @@
+<div class="entry-wrapper" [class.first]="isFirst">
+  <ng-content></ng-content>
+  <a class="del-btn" (click)="onDeleteClick($event)">
+    <img src="assets/delete.svg" />
+  </a>
+</div>

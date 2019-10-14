@@ -1,0 +1,63 @@
+ul
+  list-style: none
+
+
+@keyframes blink
+  0%
+    opacity: 0
+  50%
+    opacity: .7
+  100%
+    opacity: 0
+
+
+.heading
+  text-align: center
+  margin-top: 50px
+
+
+.list
+  max-width: 600px
+  margin: 50px auto 0px auto;
+
+
+.input-wrapper
+  display: flex
+  margin-top: 12px
+
+.input
+  width: 100%
+  border-style: none
+  background-color: #37474F
+  padding: 5px 10px
+  border-radius: 5px
+  color: white
+  font-family: 'Roboto', sans-serif
+  margin-right: 3px
+
+
+.add-btn
+  margin: auto 0px auto 5px
+  padding: 0px 3px
+  background-color: #37474F
+  border-radius: 5px
+  cursor: pointer
+
+  img
+    transform: translateY(2px)
+
+
+.margin-skeleton
+  margin: 0px 0px 5px 0px !important
+
+
+.refresh-indicator
+  width: 10px
+  height: 10px
+  border-radius: 100%
+  position: fixed
+  top: 20px
+  right: 20px
+  background-color: #FFA000
+  opacity: 0
+  animation: blink 1s ease-in-out
