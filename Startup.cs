@@ -1,11 +1,17 @@
+using System;
+using System.IO;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using musicList2.Database;
+using musicList2.Models;
 
 namespace musicList2
 {
@@ -15,19 +21,20 @@ namespace musicList2
         {
             Configuration = configuration;
 
-            using (var db = new SQLiteDbContext())
+            using (var db = new SQLiteDbContext(configuration))
             {
-                db.Database.EnsureCreated();
                 db.Database.Migrate();
             }
         }
 
+        // Config which is getting passed by ID from Main
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddOptions();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -38,6 +45,25 @@ namespace musicList2
             services
                 .AddEntityFrameworkSqlite()
                 .AddDbContext<SQLiteDbContext>();
+
+            services.AddSingleton<IKeywordAccessLayer>(layer => new KeywordAccessLayer(Configuration));
+            services.AddSingleton<IConfiguration>(Configuration);
+
+            services
+                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(opt => {
+                    opt.Events = new CookieAuthenticationEvents
+                    {
+                        OnRedirectToLogin = async context =>
+                        {
+                            context.Response.StatusCode = 403;
+                            var errorData = Encoding.UTF8.GetBytes("{\"code\": 403,\"message\": \"unauthorized\"}");
+                            await context.Response.Body.WriteAsync(errorData);
+                        }
+                    };
+
+                    opt.LogoutPath = opt.LoginPath;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +78,7 @@ namespace musicList2
                 app.UseExceptionHandler("/Error");
             }
 
+            app.UseAuthentication();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 

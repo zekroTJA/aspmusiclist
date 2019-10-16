@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using musicList2.Database;
 using musicList2.Models;
 
 namespace musicList2.Controllers
 {
+    [Authorize]
     [Route("api/list")]
     [Produces(MediaTypeNames.Application.Json)]
     public class ListController : Controller
     {
-        private readonly SQLiteDbContext db = new SQLiteDbContext();
+        private readonly SQLiteDbContext db;
+
+        public ListController(IConfiguration configuration)
+        {
+            db = new SQLiteDbContext(configuration);
+        }
 
         [HttpGet("entries")]
         public IActionResult GetEntries()
