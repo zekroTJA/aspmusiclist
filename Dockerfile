@@ -1,4 +1,5 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:2.1 AS build-env
+
 WORKDIR /app
 
 
@@ -12,6 +13,7 @@ RUN dotnet restore &&\
     dotnet build
 
 
+ENV ML_SERVER__URL="http://localhost:8080"
 
 EXPOSE 8080
 
