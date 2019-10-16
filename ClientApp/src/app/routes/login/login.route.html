@@ -1,0 +1,13 @@
+<div *ngIf="refreshing" class="refresh-indicator"></div>
+
+<div class=heading>
+  <h1>LOGIN</h1>
+</div>
+
+<div class="flex-wrapper">
+  <div class="input-wrapper">
+    <div *ngIf="error.visibility" class="error">{{ error.text }}</div>
+    <input type="password" [(ngModel)]="keyword" (keypress)="onKeyPress($event)" autofocus/>
+    <button class="login-btn" (click)="login(keyword)">LOGIN</button>
+  </div>
+</div>

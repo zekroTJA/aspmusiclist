@@ -1,0 +1,54 @@
+@import '../../../sass/mixins'
+
+
+$max-face-width: 300px
+
+
+input
+  +input
+  width: 100%
+  text-align: center
+
+
+.login-btn
+  margin: 10px auto
+  width: 100%
+  border-radius: 5px
+  border-style: none
+  background-color: #0D47A1
+  padding: 7px
+  color: white
+  font-family: 'Roboto', sans-serif
+  transition: all .25s ease-in-out
+  cursor: pointer
+
+  &:hover
+    background-color: #1565C0
+
+
+.heading
+  text-align: center
+  margin-top: 50px
+  margin-bottom: 50px
+
+
+.flex-wrapper
+  display: flex
+  width: 100%
+
+
+.input-wrapper
+  max-width: $max-face-width
+  width: 100%
+  margin: 0 auto
+
+
+.error
+  width: 100%
+  height: fit-content
+  padding: 10px
+  background-color: #b71c1c5e
+  box-sizing: border-box
+  margin-bottom: 20px
+  border-radius: 5px
+  border: solid 2px #b71c1c

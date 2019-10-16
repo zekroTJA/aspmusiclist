@@ -56,8 +56,8 @@ namespace musicList2
                     {
                         OnRedirectToLogin = async context =>
                         {
-                            context.Response.StatusCode = 403;
-                            var errorData = Encoding.UTF8.GetBytes("{\"code\": 403,\"message\": \"unauthorized\"}");
+                            context.Response.StatusCode = 401;
+                            var errorData = Encoding.UTF8.GetBytes("{\"code\": 401,\"message\": \"unauthorized\"}");
                             await context.Response.Body.WriteAsync(errorData);
                         }
                     };

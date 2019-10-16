@@ -8,9 +8,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EntryComponent } from './components/entry/entry.component';
+import { MainRouteComponent } from './routes/main/main.route';
+import { LoginRouteComponent } from './routes/login/login.route';
 
 @NgModule({
-  declarations: [AppComponent, EntryComponent],
+  declarations: [
+    AppComponent,
+    EntryComponent,
+    MainRouteComponent,
+    LoginRouteComponent,
+  ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],

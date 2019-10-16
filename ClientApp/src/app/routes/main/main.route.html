@@ -1,0 +1,40 @@
+<div *ngIf="refreshing" class="refresh-indicator"></div>
+
+<div class="footer">
+  <a class="exit-btn" (click)="onLogout($event)">
+    <img src="assets/exit.svg"/>
+    <p>LOGOUT</p>
+  </a>
+</div>
+
+<div class=heading>
+  <h1>MUSIC LIST</h1>
+</div>
+
+<div class="list">
+
+  <div *ngIf="entries != undefined && entries != null; else skeleton">
+    <app-entry
+      *ngFor="let e of entries; index as i"
+      [isFirst]="i == 0"
+      (delete)="onEntryDelete(e)"
+    >{{ e.content }}</app-entry>
+  </div>
+
+  <ng-template #skeleton>
+    <div
+      *ngFor="let _ of range(5); index as i"
+      [style.animation-delay]="i * 0.1 + 's'"
+      class="skeleton list margin-skeleton"
+    ></div>
+  </ng-template>
+
+  <div class="input-wrapper">
+    <input class="input" [(ngModel)]="inputValue" (keypress)="onInputKeyPress($event)" type="text" />
+    <a class="add-btn" (click)="onEntryAdd($event)">
+      <img src="assets/add.svg" />
+    </a>
+  </div>
+
+
+</div>

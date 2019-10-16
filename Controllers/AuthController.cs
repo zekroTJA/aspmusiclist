@@ -44,5 +44,12 @@ namespace musicList2.Controllers
             await HttpContext.SignInAsync(principal);
             return Ok();
         }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return Ok();
+        }
     }
 }
