@@ -1,11 +1,16 @@
 @import '../../../sass/mixins'
 
 
+$footer-height: 30px
+
+
 ul
   list-style: none
 
 
-$footer-height: 30px
+a
+  color: white
+  text-decoration: none
 
 
 @keyframes blink
@@ -76,7 +81,12 @@ $footer-height: 30px
   padding: 5px
 
 
-.exit-btn
+.btn-wrapper
+  display: flex
+  width: fit-content
+  margin: auto
+
+.btn
   display: flex
   border-radius: 5px
   margin: auto 5px

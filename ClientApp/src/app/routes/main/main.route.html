@@ -1,10 +1,16 @@
 <div *ngIf="refreshing" class="refresh-indicator"></div>
 
 <div class="footer">
-  <a class="exit-btn" (click)="onLogout($event)">
-    <img src="assets/exit.svg"/>
-    <p>LOGOUT</p>
-  </a>
+  <div class="btn-wrapper">
+    <a class="btn" (click)="onLogout($event)">
+      <img src="assets/exit.svg"/>
+      <p>LOGOUT</p>
+    </a>
+    <a class="btn" href="https://github.com/zekroTJA/aspmusiclist" target="_blank">
+      <img src="assets/github.png"/>
+      <p>REPOSITORY</p>
+    </a>
+  </div>
 </div>
 
 <div class=heading>
