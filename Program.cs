@@ -49,10 +49,12 @@ namespace musicList2
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddCommandLine(args)
-                .AddEnvironmentVariables(prefix: "ML_")
                 .AddJsonFile("appsettings.json", optional: true)
+                .AddEnvironmentVariables(prefix: "ML_")
+                .AddCommandLine(args)
                 .Build();
+
+            Console.WriteLine($"TEST: {config["test"]}");
 
             return WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(config)

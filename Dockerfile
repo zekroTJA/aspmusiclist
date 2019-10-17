@@ -18,7 +18,7 @@ RUN dotnet restore &&\
 
 
 ENV ML_SERVER__URL="http://localhost:8080"
-ENV ML_CONNECTIONSTRINGS_SQLITE="Data Source=Database.db"
+ENV ML_CONNECTIONSTRINGS__SQLITE="Data Source=Database.db"
 ENV ASPNETCORE_ENVIRONMENT="Production"
 
 EXPOSE 8080
