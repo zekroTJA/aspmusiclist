@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Data.Sqlite;
@@ -27,6 +28,7 @@ namespace musicList2
 
             using (db = new AppDbContext(configuration))
             {
+                db.Database.EnsureCreated();
                 db.Database.Migrate();
             }
         }
@@ -85,6 +87,11 @@ namespace musicList2
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             app.Use(async (ctx, next) =>
             {

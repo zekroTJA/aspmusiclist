@@ -9,12 +9,18 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - &&\
 
 COPY . .
 
+RUN cd ClientApp &&\
+    npm install &&\
+    ng build --prod --output-path ./dist
+
 RUN dotnet restore &&\
     dotnet build
 
 
 ENV ML_SERVER__URL="http://localhost:8080"
+ENV ML_CONNECTIONSTRINGS__SQLITE="Data Source=Database.db"
+ENV ASPNETCORE_ENVIRONMENT="Production"
 
 EXPOSE 8080
 
-CMD dotnet bin/Debug/netcoreapp2.1/musicList2.dll
+CMD ["dotnet", "bin/Debug/netcoreapp2.1/musicList2.dll"]
