@@ -7,6 +7,6 @@ namespace musicList2.Models
 {
     public interface IKeywordAccessLayer
     {
-        bool ValidateLogin(string kw);
+        bool ValidateLogin(List list, string keyword);
     }
 }

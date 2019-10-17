@@ -6,38 +6,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using DevOne.Security.Cryptography.BCrypt;
 using musicList2.Exceptions;
+using musicList2.Database;
+using musicList2.Shared;
 
 namespace musicList2.Models
 {
     public class KeywordAccessLayer : IKeywordAccessLayer
     {
-        private readonly string keywordHash;
+        private readonly AppDbContext db;
 
-        public KeywordAccessLayer(IConfiguration configuration)
+        public KeywordAccessLayer(AppDbContext _db)
         {
-            keywordHash = configuration["Authorization:KeywordHash"];
-            if (keywordHash == null || keywordHash == "")
-            {
-                throw new NotConfiguredException("Authorization:KeywordHash");
-            }
+            db = _db;
         }
 
-        public bool ValidateLogin(string kw)
-        {
-            var kwSplit = kw.Split(" ");
-            if (kwSplit.Length <= 1)
-                return false;
-
-            if (kwSplit[0].ToLower() != "basic")
-                return false;
-
-            try
-            {
-                return BCryptHelper.CheckPassword(kwSplit[1], keywordHash);
-            } catch (Exception)
-            {
-                return false;
-            }
-        }
+        public bool ValidateLogin(List list, string keyword) => 
+            Hashing.CompareStringToHash(keyword, list.KeywordHash);
     }
 }

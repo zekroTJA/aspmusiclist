@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using DevOne.Security.Cryptography.BCrypt;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
@@ -53,20 +54,8 @@ namespace musicList2
                 .AddJsonFile("appsettings.json", optional: true)
                 .Build();
 
-            Action<KestrelServerOptions> kestrelOptions = (opts) =>
-            {
-                // Might use this for SSL implementation
-                //opts.Listen(IPAddress.Any, 8080, listenOptions =>
-                //{
-                //    listenOptions.UseHttps("cert.pfx", "password");
-                //});
-            };
-
-            return new WebHostBuilder()
-                .UseKestrel(kestrelOptions)
-                .UseContentRoot(Directory.GetCurrentDirectory())
+            return WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(config)
-                .UseIISIntegration()
                 .UseUrls(config["Server:URL"])
                 .UseStartup<Startup>();
         }

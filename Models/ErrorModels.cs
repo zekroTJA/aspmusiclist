@@ -17,10 +17,13 @@ namespace musicList2.Models
             Message = message;
         }
 
-        public static ErrorModel BadRequest()
-            => new ErrorModel(400, "bad request");
+        public static ErrorModel BadRequest() => 
+            new ErrorModel(400, "bad request");
 
-        public static ErrorModel NotFound()
-            => new ErrorModel(404, "not found");
+        public static ErrorModel NotFound() => 
+            new ErrorModel(404, "not found");
+
+        public static ErrorModel AlreadyExists() =>
+            new ErrorModel(400, "already exists");
     }
 }
