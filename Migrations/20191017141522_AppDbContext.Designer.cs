@@ -9,7 +9,7 @@ using musicList2.Database;
 namespace musicList2.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191017081943_AppDbContext")]
+    [Migration("20191017141522_AppDbContext")]
     partial class AppDbContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

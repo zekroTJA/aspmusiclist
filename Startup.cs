@@ -28,6 +28,7 @@ namespace musicList2
 
             using (db = new AppDbContext(configuration))
             {
+                db.Database.EnsureCreated();
                 db.Database.Migrate();
             }
         }
