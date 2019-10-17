@@ -4,10 +4,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ListEntry } from './api.models';
+import { ListEntry, List } from './api.models';
 import { Router } from '@angular/router';
-
-/** @format */
 
 @Injectable({
   providedIn: 'root',
@@ -47,6 +45,18 @@ export class APIService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  public getList(): Observable<List> {
+    return this.http
+      .get<List>(this.root('list'), this.defopts())
+      .pipe(catchError(this.errorCatcher));
+  }
+
+  public createList(listIdentifier: string, keyword: string): Promise<any> {
+    return this.http
+      .post(this.root('list'), { listIdentifier, keyword }, this.defopts())
+      .toPromise<any>();
+  }
+
   public getEntries(): Observable<ListEntry[]> {
     return this.http
       .get<ListEntry[]>(this.listEntries(), this.defopts())
@@ -71,13 +81,10 @@ export class APIService {
       .pipe(catchError(this.errorCatcher));
   }
 
-  public authLogin(pw: string): Promise<any> {
-    const opts = this.defopts({
-      headers: {
-        Authorization: `Basic ${pw}`,
-      },
-    });
-    return this.http.post(this.auth('login'), {}, opts).toPromise();
+  public authLogin(listIdentifier: string, keyword: string): Promise<any> {
+    return this.http
+      .post(this.auth('login'), { listIdentifier, keyword }, this.defopts())
+      .toPromise();
   }
 
   public authLogout(): Promise<any> {

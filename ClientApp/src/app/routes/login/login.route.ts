@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class LoginRouteComponent {
   public keyword: string;
+  public listname: string;
   public error = {
     text: '',
     visibility: false,
@@ -22,17 +23,17 @@ export class LoginRouteComponent {
   public onKeyPress(event: any) {
     if (event.keyCode === 13) {
       event.preventDefault();
-      this.login(this.keyword);
+      this.login();
     }
   }
 
-  private login(pw: string) {
-    if (!pw) {
+  public login() {
+    if (!this.keyword || !this.listname) {
       return;
     }
 
     this.api
-      .authLogin(pw)
+      .authLogin(this.listname, this.keyword)
       .then(() => {
         this.router.navigate(['/']);
       })
@@ -40,6 +41,25 @@ export class LoginRouteComponent {
         this.keyword = '';
         this.error.text = 'Invalid keyword.';
         this.error.visibility = true;
+      });
+  }
+
+  public create() {
+    if (!this.keyword || !this.listname) {
+      return;
+    }
+
+    this.api
+      .createList(this.listname, this.keyword)
+      .then(() => {
+        this.login();
+      })
+      .catch((err) => {
+        console.error(err);
+        if (err.error) {
+          this.error.text = err.error.message;
+          this.error.visibility = true;
+        }
       });
   }
 }

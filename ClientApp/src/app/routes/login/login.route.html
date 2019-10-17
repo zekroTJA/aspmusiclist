@@ -7,7 +7,10 @@
 <div class="flex-wrapper">
   <div class="input-wrapper">
     <div *ngIf="error.visibility" class="error">{{ error.text }}</div>
-    <input type="password" [(ngModel)]="keyword" (keypress)="onKeyPress($event)" autofocus/>
-    <button class="login-btn" (click)="login(keyword)">LOGIN</button>
+    <input type="text" [(ngModel)]="listname" placeholder="List Name" autofocus/>
+    <input type="password" [(ngModel)]="keyword" (keypress)="onKeyPress($event)" placeholder="Keyword"/>
+    <button class="login-btn" (click)="login()">OPEN LIST</button>
+    <h3 class="between-h">OR</h3>
+    <button class="login-btn new-btn" (click)="create()">CREATE NEW LIST</button>
   </div>
 </div>
