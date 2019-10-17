@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace musicList2.Migrations
 {
-    public partial class SQLiteMigration : Migration
+    public partial class AppDbContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,11 +12,25 @@ namespace musicList2.Migrations
                 columns: table => new
                 {
                     GUID = table.Column<Guid>(nullable: false),
+                    ListGUID = table.Column<Guid>(nullable: false),
                     Content = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Entries", x => x.GUID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Lists",
+                columns: table => new
+                {
+                    GUID = table.Column<Guid>(nullable: false),
+                    Identifier = table.Column<string>(nullable: true),
+                    KeywordHash = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lists", x => x.GUID);
                 });
         }
 
@@ -24,6 +38,9 @@ namespace musicList2.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Entries");
+
+            migrationBuilder.DropTable(
+                name: "Lists");
         }
     }
 }

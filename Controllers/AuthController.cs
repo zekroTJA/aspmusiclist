@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using musicList2.Database;
+using musicList2.Extensions;
 using musicList2.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
@@ -17,25 +16,39 @@ namespace musicList2.Controllers
     public class AuthController : Controller
     {
         private readonly IKeywordAccessLayer keywordAccess;
+        private readonly AppDbContext db;
 
-        public AuthController(IKeywordAccessLayer _keywordAccess)
+        public AuthController(IKeywordAccessLayer _keywordAccess, AppDbContext _db)
         {
             keywordAccess = _keywordAccess;
+            db = _db;
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login()
+        public async Task<IActionResult> Login([FromBody, Bind("ListIdentifier", "Keyword")] AuthorizationModel auth)
         {
-            var authHeaderValue = HttpContext.Request.Headers["Authorization"];
+            if (!auth.Validate())
+            {
+                return BadRequest(ErrorModel.BadRequest());
+            }
 
-            if (!keywordAccess.ValidateLogin(authHeaderValue))
+            auth.LowerIdentifier();
+
+            var list = db.Lists.FirstOrDefault(l => l.Identifier == auth.ListIdentifier);
+            if (list == null)
+            {
+                return Unauthorized();
+            }
+
+            if (!keywordAccess.ValidateLogin(list, auth.Keyword))
             {
                 return Unauthorized();
             }
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, "anonymous"),
+                new Claim(ExtendedClaimTypes.ListIdentifier, list.Identifier),
+                new Claim(ExtendedClaimTypes.ListGUID, list.GUID.ToString()),
             };
 
             var identity = new ClaimsIdentity(claims, "login");

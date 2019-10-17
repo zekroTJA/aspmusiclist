@@ -2,21 +2,33 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using musicList2.Database;
 
 namespace musicList2.Migrations
 {
-    [DbContext(typeof(SQLiteDbContext))]
-    [Migration("20191009092932_SQLiteMigration")]
-    partial class SQLiteMigration
+    [DbContext(typeof(AppDbContext))]
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.11-servicing-32099");
+
+            modelBuilder.Entity("musicList2.Models.List", b =>
+                {
+                    b.Property<Guid>("GUID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Identifier");
+
+                    b.Property<string>("KeywordHash");
+
+                    b.HasKey("GUID");
+
+                    b.ToTable("Lists");
+                });
 
             modelBuilder.Entity("musicList2.Models.ListEntry<string>", b =>
                 {
@@ -24,6 +36,8 @@ namespace musicList2.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Content");
+
+                    b.Property<Guid>("ListGUID");
 
                     b.HasKey("GUID");
 

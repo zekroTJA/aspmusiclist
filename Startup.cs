@@ -17,18 +17,19 @@ namespace musicList2
 {
     public class Startup
     {
+        // Config which is getting passed by ID from Main
+        public IConfiguration Configuration { get; }
+        private AppDbContext db;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
 
-            using (var db = new SQLiteDbContext(configuration))
+            using (db = new AppDbContext(configuration))
             {
                 db.Database.Migrate();
             }
         }
-
-        // Config which is getting passed by ID from Main
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -44,10 +45,13 @@ namespace musicList2
 
             services
                 .AddEntityFrameworkSqlite()
-                .AddDbContext<SQLiteDbContext>();
+                .AddDbContext<AppDbContext>();
 
-            services.AddSingleton<IKeywordAccessLayer>(layer => new KeywordAccessLayer(Configuration));
-            services.AddSingleton<IConfiguration>(Configuration);
+            services
+                .AddTransient<IKeywordAccessLayer, KeywordAccessLayer>();
+
+            services
+                .AddSingleton<IConfiguration>(Configuration);
 
             services
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
