@@ -54,7 +54,7 @@ namespace musicList2
                 .AddCommandLine(args)
                 .Build();
 
-            Console.WriteLine($"TEST: {config["test"]}");
+            Console.WriteLine($"LOADING SQLITE DATABASE FROM: {config.GetConnectionString("SQLite")}");
 
             return WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(config)
