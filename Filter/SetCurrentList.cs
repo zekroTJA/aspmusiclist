@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace musicList2.Filter
 {
+    /// <summary>
+    /// Attribute Filter for setting the current list GUID
+    /// got from the User Claims in Controlelrs implementing
+    /// IListController.
+    /// </summary>
     public class SetCurrentList : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)

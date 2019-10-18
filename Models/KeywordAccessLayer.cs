@@ -11,6 +11,9 @@ using musicList2.Shared;
 
 namespace musicList2.Models
 {
+    /// <summary>
+    /// Class to validate logins to lists.
+    /// </summary>
     public class KeywordAccessLayer : IKeywordAccessLayer
     {
         private readonly AppDbContext db;

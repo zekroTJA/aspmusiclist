@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace musicList2.Extensions
 {
+    /// <summary>
+    /// Additionally used Authorization Cookie Claim Types.
+    /// </summary>
     public static class ExtendedClaimTypes
     {
         public const string ListIdentifier = "MusicList.List.Identifier";

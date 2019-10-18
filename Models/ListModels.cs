@@ -6,6 +6,9 @@ using System.Runtime.Serialization;
 
 namespace musicList2.Models {
 
+    /// <summary>
+    /// List Model.
+    /// </summary>
     public class List
     {
         [Key]
@@ -27,6 +30,10 @@ namespace musicList2.Models {
         }
     }
 
+    /// <summary>
+    /// generic List Entry Model.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ListEntry<T> {
         [Key]
         public Guid GUID { get; set; }
@@ -43,6 +50,10 @@ namespace musicList2.Models {
         }
     }
 
+    /// <summary>
+    /// List ENtry Model when received as post
+    /// request for creating List Entries.
+    /// </summary>
     public class ListEntryPostModel
     {
         [Required]

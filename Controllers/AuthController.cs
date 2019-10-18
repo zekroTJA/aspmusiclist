@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using musicList2.Database;
 using musicList2.Extensions;
+using musicList2.Filter;
 using musicList2.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,10 @@ using System.Threading.Tasks;
 
 namespace musicList2.Controllers
 {
+    /// <summary>
+    /// Controller handling login and logout for
+    /// lists.
+    /// </summary>
     [Route("api/auth")]
     [Produces(MediaTypeNames.Application.Json)]
     public class AuthController : Controller
@@ -25,6 +30,7 @@ namespace musicList2.Controllers
         }
 
         [HttpPost("login")]
+        [RateLimited(10, 3)]
         public async Task<IActionResult> Login([FromBody, Bind("ListIdentifier", "Keyword")] AuthorizationModel auth)
         {
             if (!auth.Validate())
@@ -59,6 +65,7 @@ namespace musicList2.Controllers
         }
 
         [HttpPost("logout")]
+        [RateLimited]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();

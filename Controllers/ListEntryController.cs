@@ -11,9 +11,13 @@ using musicList2.Models;
 
 namespace musicList2.Controllers
 {
+    /// <summary>
+    /// Controller handling actions on and with
+    /// ListEntries.
+    /// </summary>
+    [Route("api/list/entries")]
     [Authorize]
     [SetCurrentList]
-    [Route("api/list/entries")]
     [Produces(MediaTypeNames.Application.Json)]
     public class ListEntryController : Controller, IListController
     {
@@ -27,6 +31,7 @@ namespace musicList2.Controllers
         }
 
         [HttpGet]
+        [RateLimited]
         public IActionResult GetEntries()
         {
             List<ListEntry<string>> entries = db.Entries.Where(e => e.ListGUID == CurrentListGUID).ToList();
@@ -35,6 +40,7 @@ namespace musicList2.Controllers
         }
 
         [HttpPost]
+        [RateLimited(1, 5)]
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> CreateEntry([Bind("Content"), FromBody] ListEntryPostModel entry) {
             if (!ModelState.IsValid)
@@ -52,6 +58,7 @@ namespace musicList2.Controllers
         }
 
         [HttpDelete("{entryId}")]
+        [RateLimited(1, 5)]
         public async Task<IActionResult> DeleteEntry(Guid entryId)
         {
             if (entryId == null)
@@ -70,6 +77,7 @@ namespace musicList2.Controllers
         }
 
         [HttpPost("flush")]
+        [RateLimited(5, 1)]
         public async Task<IActionResult> Flush()
         {
             var entries = db.Entries

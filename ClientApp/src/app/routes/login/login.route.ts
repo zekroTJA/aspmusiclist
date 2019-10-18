@@ -39,7 +39,19 @@ export class LoginRouteComponent {
       })
       .catch((err) => {
         this.keyword = '';
-        this.error.text = 'Invalid keyword.';
+
+        switch (err.status) {
+          case 401:
+            this.error.text = 'Invalid keyword.';
+            break;
+          case 429:
+            this.error.text = 'You have tried to often. Try again later.';
+            break;
+          default:
+            this.error.text = err.error.message;
+            break;
+        }
+
         this.error.visibility = true;
       });
   }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using musicList2.Database;
-using musicList2.Exceptions;
 using musicList2.Filter;
 using musicList2.Models;
 using System;
@@ -11,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace musicList2.Controllers
 {
+    /// <summary>
+    /// Controller handling requests about actions
+    /// on and with List objects.
+    /// </summary>
     [Route("api/list")]
     [Produces(MediaTypeNames.Application.Json)]
     public class ListController : Controller, IListController
@@ -25,6 +28,7 @@ namespace musicList2.Controllers
 
 
         [HttpPost]
+        [RateLimited(60, 3)]
         public async Task<IActionResult> CreateList([FromBody, Bind("Listidentifier", "Keyword")] AuthorizationModel listAuth)
         {
             if (!listAuth.Validate())
@@ -48,8 +52,9 @@ namespace musicList2.Controllers
             return Created("list", list);
         }
 
-        [Authorize]
         [HttpGet]
+        [Authorize]
+        [RateLimited]
         [SetCurrentList]
         public IActionResult GetList()
         {

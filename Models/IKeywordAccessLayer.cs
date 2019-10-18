@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace musicList2.Models
 {
+    /// <summary>
+    /// KeywordAccessLayer interface.
+    /// </summary>
     public interface IKeywordAccessLayer
     {
         bool ValidateLogin(List list, string keyword);

@@ -5,6 +5,10 @@ using musicList2.Models;
 
 namespace musicList2.Database
 {
+    /// <summary>
+    /// Database context for saving information
+    /// persistently in databases.
+    /// </summary>
     public class AppDbContext : DbContext
     {
         public DbSet<List> Lists { get; set; }
