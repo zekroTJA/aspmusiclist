@@ -24,17 +24,11 @@ namespace musicList2.Filter
     /// </summary>
     public class RateLimited : ActionFilterAttribute
     {
-        private const int DEFAULT_LIMIT = 1;
-        private const int DEFAULT_BURST = 5;
-
         private readonly Dictionary<IPAddress, RateLimiter> limiters = new Dictionary<IPAddress, RateLimiter>();
         private readonly TimeSpan limit;
         private readonly int burst;
 
-        public RateLimited() =>
-            new RateLimited(DEFAULT_LIMIT, DEFAULT_BURST);
-
-        public RateLimited(int limitSeconds, int _burst)
+        public RateLimited(int limitSeconds = 1, int _burst = 5)
         {
             limit = TimeSpan.FromSeconds(limitSeconds);
             burst = _burst;
@@ -81,7 +75,7 @@ namespace musicList2.Filter
 
             headers.Add("X-Ratelimit-Limit", reservation.Burst.ToString());
             headers.Add("X-Ratelimit-Remaining", reservation.Remaining.ToString());
-            headers.Add("X-Ratelimit-Reset", reservation.Reset.ToLongTimeString());
+            headers.Add("X-Ratelimit-Reset", reservation.Reset.ToString("o"));
         }
     }
 }

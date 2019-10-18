@@ -4,8 +4,9 @@ This is just a small project where I am currently trying to get into ASP.NET Cor
 
 ## "Road Map"
 
-- [x] Code Documentation
 - [ ] API Documentation
-- [x] Rate Limiting
 - [ ] Administration key  
   *Will be created and displayed on creation of a list to delete, chanhe password*
+- [ ] Appropriate error messages in front end
+- [x] Code Documentation
+- [x] Rate Limiting
