@@ -8,5 +8,6 @@ This is just a small project where I am currently trying to get into ASP.NET Cor
 - [ ] Administration key  
   *Will be created and displayed on creation of a list to delete, chanhe password*
 - [ ] Appropriate error messages in front end
+- [x] Spotify Search Link
 - [x] Code Documentation
 - [x] Rate Limiting

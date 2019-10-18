@@ -10,8 +10,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class EntryComponent {
   @Input() public isFirst;
   @Output() public delete: EventEmitter<any> = new EventEmitter();
+  @Output() public spotify: EventEmitter<any> = new EventEmitter();
 
   public onDeleteClick(ev: any) {
     this.delete.emit(ev);
+  }
+
+  public onSpotifyClick(ev: any) {
+    this.spotify.emit(ev);
   }
 }

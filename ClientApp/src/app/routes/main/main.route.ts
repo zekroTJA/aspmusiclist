@@ -39,6 +39,14 @@ export class MainRouteComponent {
     });
   }
 
+  public onEntrySpotify(e: ListEntry) {
+    const url = `https://open.spotify.com/search/${encodeURI(e.content)}`;
+    const wnd = window.open(url, '_blank');
+    if (wnd) {
+      wnd.focus();
+    }
+  }
+
   public onEntryAdd(event: any) {
     if (this.inputValue.length <= 0) {
       return;

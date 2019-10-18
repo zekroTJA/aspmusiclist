@@ -1,6 +1,11 @@
 <div class="entry-wrapper" [class.first]="isFirst">
   <ng-content></ng-content>
-  <a class="del-btn" (click)="onDeleteClick($event)">
-    <img src="assets/delete.svg" />
-  </a>
+  <div class="btns">
+    <a class="action-btn" (click)="onSpotifyClick($event)">
+      <img src="assets/spotify.png" />
+    </a>
+    <a class="action-btn" (click)="onDeleteClick($event)">
+      <img src="assets/delete.svg" />
+    </a>
+  </div>
 </div>

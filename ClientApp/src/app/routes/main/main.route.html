@@ -24,6 +24,7 @@
       *ngFor="let e of entries; index as i"
       [isFirst]="i == 0"
       (delete)="onEntryDelete(e)"
+      (spotify)="onEntrySpotify(e)"
     >{{ e.content }}</app-entry>
   </div>
 
