@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using musicList2.Database;
 using musicList2.Filter;
 using musicList2.Models;
+using musicList2.Shared;
 using System;
 using System.Linq;
 using System.Net.Mime;
@@ -45,15 +46,20 @@ namespace musicList2.Controllers
 
             var list = new List(listAuth.ListIdentifier, listAuth.Keyword);
 
+            var masterKey = SecureRandom.GenerateMasterKey(32);
+            list.MasterKeyHash = Hashing.CreatePasswordHash(masterKey);
+
             await db.Lists.AddAsync(list);
             await db.SaveChangesAsync();
 
-            list.KeywordHash = "";
-            return Created("list", list);
+            var outList = new ListCreated(list, masterKey);
+            
+            return Created("list", outList);
         }
 
         [HttpGet]
         [Authorize]
+        [ServiceFilter(typeof(AuthorizeMasterKey))]
         [RateLimited]
         [SetCurrentList]
         public IActionResult GetList()

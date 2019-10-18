@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using musicList2.Database;
+using musicList2.Filter;
 using musicList2.Models;
 
 namespace musicList2
@@ -50,7 +51,8 @@ namespace musicList2
                 .AddDbContext<AppDbContext>();
 
             services
-                .AddTransient<IKeywordAccessLayer, KeywordAccessLayer>();
+                .AddTransient<IKeywordAccessLayer, KeywordAccessLayer>()
+                .AddTransient<AuthorizeMasterKey>();
 
             services
                 .AddSingleton<IConfiguration>(Configuration);

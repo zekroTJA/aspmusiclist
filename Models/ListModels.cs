@@ -1,6 +1,5 @@
 using musicList2.Shared;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
@@ -19,6 +18,9 @@ namespace musicList2.Models {
         [IgnoreDataMember]
         public string KeywordHash { get; set; }
 
+        [IgnoreDataMember]
+        public string MasterKeyHash { get; set; }
+
         public List() { }
 
         public List(string identifier, string keyword)
@@ -27,6 +29,23 @@ namespace musicList2.Models {
 
             GUID = Guid.NewGuid();
             KeywordHash = Hashing.CreatePasswordHash(keyword);
+        }
+    }
+
+    /// <summary>
+    /// Lisr response model which is returned on
+    /// list creation containing the randomly generated
+    /// master key.
+    /// </summary>
+    public class ListCreated : List
+    {
+        public string MasterKey { get; set; }
+
+        public ListCreated(List list, string masterKey)
+        {
+            GUID = list.GUID;
+            Identifier = list.Identifier;
+            MasterKey = masterKey;
         }
     }
 
@@ -48,15 +67,5 @@ namespace musicList2.Models {
 
             GUID = Guid.NewGuid();
         }
-    }
-
-    /// <summary>
-    /// List ENtry Model when received as post
-    /// request for creating List Entries.
-    /// </summary>
-    public class ListEntryPostModel
-    {
-        [Required]
-        public string Content { get; set; }
     }
 }

@@ -25,6 +25,8 @@ namespace musicList2.Migrations
 
                     b.Property<string>("KeywordHash");
 
+                    b.Property<string>("MasterKeyHash");
+
                     b.HasKey("GUID");
 
                     b.ToTable("Lists");
