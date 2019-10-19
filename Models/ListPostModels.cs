@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace musicList2.Models
 {
     /// <summary>
-    /// List ENtry Model when received as post
+    /// List Entry Model when received as post
     /// request for creating List Entries.
     /// </summary>
     public class ListEntryPostModel
@@ -21,7 +21,7 @@ namespace musicList2.Models
         [Required]
         public string MasterKey { get; set; }
         [Required]
-        public string Password { get; set; }
+        public string NewKeyword { get; set; }
     }
 
     public class ListMasterKeyModel : IMasterKey

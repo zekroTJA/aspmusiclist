@@ -34,6 +34,10 @@ namespace musicList2.Models
         public static ErrorModel NotFound() => 
             new ErrorModel(404, "not found");
 
+        /// <summary>
+        /// Error model object for 401 Unauthorized.
+        /// </summary>
+        /// <returns>ErrorModel</returns>
         public static ErrorModel Unauthorized() =>
             new ErrorModel(401, "unauthorized");
 
@@ -45,6 +49,10 @@ namespace musicList2.Models
         public static ErrorModel AlreadyExists() =>
             new ErrorModel(400, "already exists");
 
+        /// <summary>
+        /// Error model object for 429 Too Many Requests.
+        /// </summary>
+        /// <returns>ErrorModel</returns>
         public static ErrorModel RateLimited() =>
             new ErrorModel(429, "you are being rate limited");
     }

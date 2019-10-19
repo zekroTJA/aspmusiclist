@@ -30,7 +30,8 @@ namespace musicList2.Controllers
 
         [HttpPost]
         [RateLimited(60, 3)]
-        public async Task<IActionResult> CreateList([FromBody, Bind("Listidentifier", "Keyword")] AuthorizationModel listAuth)
+        public async Task<IActionResult> CreateList(
+            [FromBody, Bind("Listidentifier", "Keyword")] AuthorizationModel listAuth)
         {
             if (!listAuth.Validate())
             {
@@ -74,9 +75,11 @@ namespace musicList2.Controllers
 
         [HttpDelete]
         [Authorize]
+        [RateLimited(3, 3)]
         [SetCurrentList]
         [ServiceFilter(typeof(AuthorizeMasterKey))]
-        public async Task<IActionResult> DeleteList([FromBody, Bind("MasterKey")] ListMasterKeyModel model)
+        public async Task<IActionResult> DeleteList(
+            [FromBody, Bind("MasterKey")] ListMasterKeyModel model)
         {
             var list = db.Lists.Find(CurrentListGUID);
             if (list == null)
@@ -85,6 +88,32 @@ namespace musicList2.Controllers
             }
 
             db.Lists.Remove(list);
+            await db.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPost("password")]
+        [Authorize]
+        [RateLimited(3, 3)]
+        [SetCurrentList]
+        [ServiceFilter(typeof(AuthorizeMasterKey))]
+        public async Task<IActionResult> ChangePassword(
+            [FromBody, Bind("MasterKey", "NewKeyword")] ListPasswordChangeModel model)
+        {
+            var list = db.Lists.Find(CurrentListGUID);
+            if (list == null)
+            {
+                return NotFound(ErrorModel.NotFound());
+            }
+
+            if (model.NewKeyword == null || model.NewKeyword.Length < 1)
+            {
+                return BadRequest(ErrorModel.BadRequest());
+            }
+
+            list.KeywordHash = Hashing.CreatePasswordHash(model.NewKeyword);
+            db.Lists.Update(list);
             await db.SaveChangesAsync();
 
             return Ok();

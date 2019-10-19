@@ -29,9 +29,8 @@ namespace musicList2.Filter
                 return;
             }
 
-            var masterKeyModel = context.ActionArguments.Values.FirstOrDefault(v => v is IMasterKey) as IMasterKey;
 
-            if (masterKeyModel == null)
+            if (!(context.ActionArguments.Values.FirstOrDefault(v => v is IMasterKey) is IMasterKey masterKeyModel))
             {
                 context.Result = new BadRequestObjectResult(ErrorModel.BadRequest());
                 return;
@@ -43,7 +42,7 @@ namespace musicList2.Filter
                 res.StatusCode = 401;
                 context.Result = res;
                 return;
-            };
+            }
         }
     }
 }
