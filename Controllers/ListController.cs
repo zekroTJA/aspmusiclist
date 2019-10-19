@@ -59,7 +59,6 @@ namespace musicList2.Controllers
 
         [HttpGet]
         [Authorize]
-        [ServiceFilter(typeof(AuthorizeMasterKey))]
         [RateLimited]
         [SetCurrentList]
         public IActionResult GetList()
@@ -71,6 +70,24 @@ namespace musicList2.Controllers
             }
 
             return Ok(list);
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [SetCurrentList]
+        [ServiceFilter(typeof(AuthorizeMasterKey))]
+        public async Task<IActionResult> DeleteList([FromBody, Bind("MasterKey")] ListMasterKeyModel model)
+        {
+            var list = db.Lists.Find(CurrentListGUID);
+            if (list == null)
+            {
+                return NotFound(ErrorModel.NotFound());
+            }
+
+            db.Lists.Remove(list);
+            await db.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }

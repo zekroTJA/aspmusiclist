@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using musicList2.Controllers;
 using musicList2.Database;
+using musicList2.Models;
+using musicList2.Shared;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace musicList2.Filter
 {
@@ -18,8 +20,30 @@ namespace musicList2.Filter
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            //var listGUID context.Controller;
-            Console.WriteLine($"DB IS NULLL? {db == null}");
+            var listGUID = ((IListController) context.Controller).CurrentListGUID;
+            var currList = db.Lists.Find(listGUID);
+
+            if (currList == null)
+            {
+                context.Result = new NotFoundObjectResult(ErrorModel.NotFound());
+                return;
+            }
+
+            var masterKeyModel = context.ActionArguments.Values.FirstOrDefault(v => v is IMasterKey) as IMasterKey;
+
+            if (masterKeyModel == null)
+            {
+                context.Result = new BadRequestObjectResult(ErrorModel.BadRequest());
+                return;
+            }
+
+            if (!Hashing.CompareStringToHash(masterKeyModel.MasterKey, currList.MasterKeyHash))
+            {
+                var res = new ObjectResult(ErrorModel.Unauthorized());
+                res.StatusCode = 401;
+                context.Result = res;
+                return;
+            };
         }
     }
 }

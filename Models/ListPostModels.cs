@@ -23,4 +23,10 @@ namespace musicList2.Models
         [Required]
         public string Password { get; set; }
     }
+
+    public class ListMasterKeyModel : IMasterKey
+    {
+        [Required]
+        public string MasterKey { get; set; }
+    }
 }

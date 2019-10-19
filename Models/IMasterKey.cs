@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace musicList2.Models
 {
-    interface IMasterKey
+    public interface IMasterKey
     {
         string MasterKey { get; set; }
     }

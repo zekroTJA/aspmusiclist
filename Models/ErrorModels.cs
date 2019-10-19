@@ -34,6 +34,9 @@ namespace musicList2.Models
         public static ErrorModel NotFound() => 
             new ErrorModel(404, "not found");
 
+        public static ErrorModel Unauthorized() =>
+            new ErrorModel(401, "unauthorized");
+
         /// <summary>
         /// Error mdoel object when to creating object
         /// already exists.
