@@ -2,8 +2,9 @@
 
 import { Component } from '@angular/core';
 import { APIService } from '../../api/api.service';
-import { ListEntry } from '../../api/api.models';
+import { ListEntry, List, Login } from '../../api/api.models';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-route-login',
@@ -18,7 +19,11 @@ export class LoginRouteComponent {
     visibility: false,
   };
 
-  constructor(private api: APIService, private router: Router) {}
+  constructor(
+    private api: APIService,
+    private router: Router,
+    private shared: SharedService
+  ) {}
 
   public onKeyPress(event: any) {
     if (event.keyCode === 13) {
@@ -63,8 +68,13 @@ export class LoginRouteComponent {
 
     this.api
       .createList(this.listname, this.keyword)
-      .then(() => {
-        this.login();
+      .then((list: List) => {
+        this.shared.sharedList = list;
+        this.shared.sharedLogin = {
+          Keyword: this.keyword,
+          ListIdentifier: this.listname,
+        } as Login;
+        this.router.navigate(['/created']);
       })
       .catch((err) => {
         console.error(err);

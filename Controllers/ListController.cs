@@ -118,5 +118,14 @@ namespace musicList2.Controllers
 
             return Ok();
         }
+
+        [HttpPost("checkMasterKey")]
+        [Authorize]
+        [RateLimited(1, 5)]
+        [SetCurrentList]
+        [ServiceFilter(typeof(AuthorizeMasterKey))]
+        public IActionResult CheckMasterKey(
+            [FromBody, Bind("MasterKey")] ListMasterKeyModel model) =>
+                Ok();
     }
 }

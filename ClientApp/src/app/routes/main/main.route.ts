@@ -1,6 +1,6 @@
 /** @format */
 
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { APIService } from '../../api/api.service';
 import { ListEntry } from '../../api/api.models';
 import { Router } from '@angular/router';
@@ -12,16 +12,22 @@ const REFRESH_DELAY = 15000;
   templateUrl: './main.route.html',
   styleUrls: ['./main.route.sass'],
 })
-export class MainRouteComponent {
+export class MainRouteComponent implements OnDestroy {
   public range = Array;
 
   public entries: ListEntry[];
   public inputValue = '';
   public refreshing = false;
 
+  private refreshTimer: any;
+
   constructor(private api: APIService, private router: Router) {
     this.pullEntries();
-    setInterval(this.pullEntries.bind(this), REFRESH_DELAY);
+    this.refreshTimer = setInterval(this.pullEntries.bind(this), REFRESH_DELAY);
+  }
+
+  public ngOnDestroy() {
+    clearInterval(this.refreshTimer);
   }
 
   private pullEntries() {

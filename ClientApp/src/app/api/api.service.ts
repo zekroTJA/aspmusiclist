@@ -1,7 +1,7 @@
 /** @format */
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ListEntry, List } from './api.models';
@@ -13,8 +13,11 @@ import { Router } from '@angular/router';
 export class APIService {
   private readonly root = (sub: string = '') => (sub ? `/api/${sub}` : '/api');
 
+  private readonly list = (sub: string = '') =>
+    this.root('list') + (sub ? `/${sub}` : '');
+
   private readonly listEntries = (sub: string = '') =>
-    `${this.root('list')}/entries` + (sub ? `/${sub}` : '');
+    this.list('entries') + (sub ? `/${sub}` : '');
 
   private readonly auth = (sub: string = '') =>
     this.root('auth') + (sub ? `/${sub}` : '');
@@ -89,5 +92,30 @@ export class APIService {
 
   public authLogout(): Promise<any> {
     return this.http.post(this.auth('logout'), {}, this.defopts()).toPromise();
+  }
+
+  public checkMasterKey(masterKey: string): Promise<any> {
+    return this.http
+      .post(this.list('checkMasterKey'), { masterKey }, this.defopts())
+      .toPromise();
+  }
+
+  public updateListPassword(
+    masterKey: string,
+    newKeyword: string
+  ): Promise<any> {
+    return this.http
+      .post(this.list('password'), { masterKey, newKeyword }, this.defopts())
+      .toPromise();
+  }
+
+  public deleteList(masterKey: string): Promise<any> {
+    const req = new HttpRequest(
+      'DELETE',
+      this.list(),
+      { masterKey },
+      this.defopts()
+    );
+    return this.http.request(req).toPromise();
   }
 }

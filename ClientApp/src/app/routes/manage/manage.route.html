@@ -1,0 +1,38 @@
+<div class="heading">
+  <h1>LIST MANAGEMENT</h1>
+  <a class="btn" routerLink="/">
+    <img src="assets/back.svg"/>
+    <p>BACK</p>
+  </a>
+</div>
+
+<div class="masterkey-container">
+  <h3>MASTER KEY</h3>
+  <p>Please enter here your Master Key you have collected while creating the list.</p>
+  <input type="password" [(ngModel)]="masterKey" autofocus (change)="onMasterKeyChange()"/>
+  <div *ngIf="masterKeyState > 0" class="master-key-state">
+    <img [src]="masterKeyState == 1 ? 'assets/check-green.svg' : 'assets/cross-red.svg'"/>
+    <p [class.invalid]="masterKeyState == 2">
+      Master Key is {{ masterKeyState == 1 ? 'valid' : 'invalid' }}
+    </p>
+  </div>
+</div>
+
+<div *ngIf="masterKeyState == 1" class="control-container">
+  <h3>CHANGE PASSWORD</h3>
+  <div class="input-btn-box">
+    <input type="password" [(ngModel)]="newPassword">
+    <a class="btn" (click)="changePassword()">
+      <img src="assets/save.svg"/>
+      <p>SAVE</p>
+    </a>
+  </div>
+
+  <h3>DANGER ZONE</h3>
+  <div class="input-btn-box">
+    <a class="btn delete" (click)="deleteList()">
+      <img src="assets/delete.svg"/>
+      <p>DELETE LIST FOREVER</p>
+    </a>
+  </div>
+</div>

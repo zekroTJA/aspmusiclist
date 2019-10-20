@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { EntryComponent } from './components/entry/entry.component';
 import { MainRouteComponent } from './routes/main/main.route';
 import { LoginRouteComponent } from './routes/login/login.route';
+import { CreatedRouteComponent } from './routes/created/created.route';
+import { ManageRouteComponent } from './routes/manage/manage.route';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { LoginRouteComponent } from './routes/login/login.route';
     EntryComponent,
     MainRouteComponent,
     LoginRouteComponent,
+    CreatedRouteComponent,
+    ManageRouteComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
