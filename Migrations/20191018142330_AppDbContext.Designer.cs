@@ -9,7 +9,7 @@ using musicList2.Database;
 namespace musicList2.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191017141522_AppDbContext")]
+    [Migration("20191018142330_AppDbContext")]
     partial class AppDbContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,6 +26,8 @@ namespace musicList2.Migrations
                     b.Property<string>("Identifier");
 
                     b.Property<string>("KeywordHash");
+
+                    b.Property<string>("MasterKeyHash");
 
                     b.HasKey("GUID");
 

@@ -1,0 +1,31 @@
+<div class="heading">
+  <h1>LIST CREATED</h1>
+</div>
+
+<div class="flex-wrapper">
+  <div class="input-wrapper">
+    <div class="mb-2">
+      <p>
+        Created list <span class="embeded">{{list.identifier}}</span> with following GUID:
+        <br/><br/>
+        <span class="embeded guid">{{list.guid}}</span>
+      </p>
+    </div>
+    <div class="info">
+      <div class="info-heading mb-1">
+        <img src="assets/warning.svg"/><h3>ATTENTION</h3>
+      </div>
+      <p>
+        Below, you see your lists Master Key. This key needs to be passed when making changes or on deleting the list.
+        <br/>
+        <b>This key will only be shown now and never again after. Save it somewhere you will find it later again.</b>
+      </p>
+    </div>
+    <div class="master-key mb-1">
+      <input [type]="masterKeyVisibility ? 'text' : 'password'" [value]="list.masterKey" placeholder="List Name" readonly/>
+      <a (mousedown)="masterKeyVisibility = true" (mouseup)="masterKeyVisibility = false"><img class="btn" src="assets/eye.svg"/></a>
+    </div>
+    <button class="login-btn" (click)="copyMasterKey()">COPY MASTER KEY</button>
+    <button class="login-btn new-btn" (click)="login()">LOGIN TO THIS LIST</button>
+  </div>
+</div>

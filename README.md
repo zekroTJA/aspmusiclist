@@ -7,6 +7,8 @@ This is just a small project where I am currently trying to get into ASP.NET Cor
 - [ ] API Documentation
 - [ ] Administration key  
   *Will be created and displayed on creation of a list to delete, chanhe password*
+  - [x] Backend Implementation
+  - [ ] Frontend Implementation
 - [ ] Appropriate error messages in front end
 - [x] Spotify Search Link
 - [x] Code Documentation

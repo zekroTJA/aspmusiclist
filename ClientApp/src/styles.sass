@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300&display=swap')
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap')
-
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap')
 
 @keyframes skeleton
   0%
@@ -22,6 +22,30 @@ h1, h2, h3, h4, h5
   font-weight: 300
 
 
+a
+  text-decoration: none
+  color: white
+
+
+.btn
+  display: flex
+  border-radius: 5px
+  margin: auto 5px
+  padding: 3px
+  cursor: pointer
+  transition: all .25s ease-in-out
+
+  img
+    width: 20px
+    height: 20px
+
+  p
+    margin: 0 0 0 5px
+
+  &:hover
+    background-color: #ffffff36
+
+
 .skeleton
   background-color: #3a3a3a
   animation: skeleton 2s ease infinite
@@ -39,3 +63,17 @@ h1, h2, h3, h4, h5
 .skeleton.button
   width: 60px
   height: 45px
+
+
+.embeded
+  background-color: #00000063
+  padding: 1px 4px
+  border-radius: 5px
+  font-family: 'Roboto Mono', monospace
+
+
+.mb-1
+  margin-bottom: 10px
+
+.mb-2
+  margin-bottom: 20px

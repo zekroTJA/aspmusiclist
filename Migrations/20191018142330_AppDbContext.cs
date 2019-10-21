@@ -26,7 +26,8 @@ namespace musicList2.Migrations
                 {
                     GUID = table.Column<Guid>(nullable: false),
                     Identifier = table.Column<string>(nullable: true),
-                    KeywordHash = table.Column<string>(nullable: true)
+                    KeywordHash = table.Column<string>(nullable: true),
+                    MasterKeyHash = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
