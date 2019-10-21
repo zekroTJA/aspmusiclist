@@ -1,11 +1,9 @@
 using System;
 using System.IO;
-using System.Net;
 using DevOne.Security.Cryptography.BCrypt;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace musicList2
 {
@@ -54,11 +52,24 @@ namespace musicList2
                 .AddCommandLine(args)
                 .Build();
 
-            Console.WriteLine($"LOADING SQLITE DATABASE FROM: {config.GetConnectionString("SQLite")}");
-
-            return WebHost.CreateDefaultBuilder(args)
+            return new WebHostBuilder()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
                 .UseConfiguration(config)
                 .UseUrls(config["Server:URL"])
+                .UseDefaultServiceProvider((context, options) =>
+                {
+                    options.ValidateScopes = context.HostingEnvironment.IsDevelopment();
+                })
+                .ConfigureLogging((hostingContext, logging) =>
+                {
+                    logging
+                        .AddConfiguration(hostingContext.Configuration.GetSection("Logging"))
+                        .AddConsole()
+                        .AddDebug()
+                        .AddEventSourceLogger();
+                })
                 .UseStartup<Startup>();
         }
     }
