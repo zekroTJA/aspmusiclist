@@ -6,7 +6,7 @@ This is just a small project where I am currently trying to get into ASP.NET Cor
 
 - [ ] API Documentation
 - [ ] Appropriate error messages in front end
-- [ ] Spotify API integration
+- [ ] Spotify API integration  
   *Maybeeee way later because this would be a heck lot of work for such a project.*
 
 - [x] Administration key  
